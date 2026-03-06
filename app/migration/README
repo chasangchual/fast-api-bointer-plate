@@ -1,0 +1,21 @@
+Alembic migrations for this project
+
+When you add a new model or change an existing model:
+
+1. Define/update the SQLAlchemy model in `app/models/`.
+2. Ensure the model module is imported so Alembic can see it from `app/migration/env.py`.
+3. Create a migration revision:
+   - Autogenerate (recommended): `.venv/bin/alembic revision --autogenerate -m "describe change"`
+   - Manual: `.venv/bin/alembic revision -m "describe change"` and edit the generated file in `app/migration/versions/`
+4. Review the generated migration file and verify `upgrade()` and `downgrade()` are correct.
+5. Apply the migration: `.venv/bin/alembic upgrade head`
+
+Useful commands:
+
+- Apply latest migrations: `.venv/bin/alembic upgrade head`
+- Roll back one revision: `.venv/bin/alembic downgrade -1`
+- Roll back to a specific revision: `.venv/bin/alembic downgrade <revision_id>`
+- Show current DB revision: `.venv/bin/alembic current`
+- Show migration history: `.venv/bin/alembic history`
+- Show pending SQL without applying: `.venv/bin/alembic upgrade head --sql`
+- Mark DB at current head without running migrations (use carefully): `.venv/bin/alembic stamp head`
