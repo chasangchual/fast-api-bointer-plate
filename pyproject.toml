@@ -36,6 +36,7 @@ dependencies = [
     "pydantic-core>=2.41.4",
     "pygments>=2.19.2",
     "pytest>=8.4.2",
+    "python-dotenv>=1.1.1",
     "python-jose>=3.5.0",
     "python-multipart>=0.0.20",
     "requests>=2.32.5",

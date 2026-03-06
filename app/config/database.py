@@ -1,13 +1,30 @@
+import os
+from urllib.parse import quote_plus
 from typing import Any, Generator, Annotated
 
+from fastapi import Depends, HTTPException, status
 from sqlalchemy import create_engine
 from sqlalchemy.exc import ArgumentError, NoSuchModuleError, OperationalError
 from sqlalchemy.orm import sessionmaker, Session
 from sqlalchemy.ext.declarative import declarative_base
-from fastapi import Depends, HTTPException, status
+from dotenv import load_dotenv
+
+load_dotenv()
 
 # Database DSN used by SQLAlchemy to connect to the local Postgres instance.
-SQLALCHEMY_DATABASE_URL = 'postgresql+psycopg2://cwealth:@localhost:54320/todo'
+database_url = os.getenv("DATABASE_URL")
+if database_url:
+    SQLALCHEMY_DATABASE_URL = database_url
+else:
+    db_user = os.getenv("DB_USER", "USER")
+    db_password = quote_plus(os.getenv("DB_DB_USER_PASSWORD", "PASSWORD"))
+    db_host = os.getenv("DB_HOST", "localhost")
+    db_port = os.getenv("DB_PORT", "5432")
+    db_name = os.getenv("DB_NAME", "DB")
+    SQLALCHEMY_DATABASE_URL = (
+        f"postgresql+psycopg2://{db_user}:{db_password}@{db_host}:{db_port}/{db_name}"
+    )
+
 
 # Shared engine and session factory for request-scoped DB sessions.
 try:
